@@ -1,0 +1,214 @@
+*{
+    margin: 0;
+    padding: 0;
+    transition: all 0.3s;
+}
+input{
+    padding-left: 1vw;
+}
+body{
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+}
+a{
+    color: #00856F;
+    text-decoration: none;
+}
+#navbar{
+    width: 100vw;
+    height: 5vh;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #F5F5F5;
+    box-shadow: 0 0 1vw rgba(0, 0, 0, 0.1);
+    z-index: 2;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+}
+#navbar h1{
+    margin-left: 3vw;
+    font-weight: 400;
+    font-size: 1.3vw;
+}
+#container{
+    width: 98vw;
+    padding-left: 2vw;
+    height: 95vh;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #F5F5F5;
+}
+form{
+    margin-top: 5vh;
+    width: 40vw;
+    height: 70vh;
+    padding-left: 3vw;
+    background-color: rgba(255, 255, 255, 0.2);
+    border-top: 1px solid #00856F;
+    border-right: 1px solid #00856F;
+    box-shadow: 0 0 1vw rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    justify-content: center;
+    row-gap: 2vh;
+    z-index: 3;
+}
+.login-container{
+    display: flex;
+}
+.register-container{
+    display: none;
+}
+.reset-container{
+    display: none;
+}
+form h1{
+    font-size: 2vw;
+    margin-bottom: 2vh;
+}
+form p{
+    font-size: 1vw;
+    margin-bottom: 2vh;
+}
+.textbox, .diff-textbox{
+    margin-top: 2vh;
+    width: 30vw;
+    height: 7vh;
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    justify-content: start;
+}
+.textbox input{
+    width: 29vw;
+    height: 5vh;
+    font-size: 1vw;
+    padding-left: 1vw;
+    border: none;
+    border-bottom: 1px solid #000000;
+    outline: none;
+}
+.textbox input:focus{
+    border-bottom: 1px solid #00856F;
+}
+.textbox h2, .diff-textbox h2{
+    font-weight: 300;
+    font-size: .8vw;
+    padding-left: 1vw;
+    width: 19vw;
+    height: 2vh;
+    background-color: white;
+}
+
+.reset-container div:nth-child(5){
+    display: none;
+}
+.diff-textbox .verify{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 30vw;
+    height: 5vh;
+}
+.verify input{
+    width: 20vw;
+    height: 5vh;
+    font-size: 1vw;
+    border: none;
+    border-bottom: 1px solid #000000;
+    background-color: white;
+    color: #00856F;
+    outline: none;
+}
+.verify input:focus{
+    border-bottom: 1px solid #00856F;
+}
+.verify button{
+    margin: unset;
+    width: 10vw;
+    height: 5vh;
+    font-size: 1vw;
+    border: 1px solid #00856F;
+    background-color: white;
+    color: #00856F;
+}
+.verify button:hover{
+    background-color: #00856F;
+    color: white;
+}
+.reset-container .submit{
+    display: none;
+    justify-content: center;
+}
+.diff-textbox{
+    background-color: transparent;
+}
+
+.submit{
+    width: 30vw;
+    height: 10vh;
+    display: flex;
+    justify-content: start;
+    align-items: center;
+}
+.submit input{
+    width: 20vw;
+    height: 6vh;
+    font-size: 1vw;
+    margin-right: 1vw;
+    border: 1px solid #00856F;
+    background-color: white;
+    color: #00856F;
+}
+.reset-container .submit input{
+    margin: unset;
+    width: 30vw;
+}
+.submit input:hover{
+    background-color: #00856F;
+    color: white;
+}
+.submit input:focus{
+    background-color: white;
+    color: #00856F;
+}
+.submit .myimg{
+    width: 2vw;
+    height: 2vw;
+    border-radius: 50%;
+    margin-left: 1vh;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.myimg img{
+    width: 1.4vw;
+    height: 1.4vw;
+}
+.submit p{
+    all: unset;
+    width: 3vw;
+    height: 5vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.image-container{
+    margin-top: 15vh;
+    width: 70vw;
+    height: 70vh;
+    display: flex;
+    justify-content: center;
+    align-items: end;
+}
+
+.image-container img{
+    width: auto;
+    height: 90vh;
+    margin-left: -13vw;
+}

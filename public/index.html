@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Medi-bot | Login</title>
+    <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png">
+    <link rel="manifest" href="/favicon/site.webmanifest">
+    <link rel="stylesheet" href="/css/login.css">
+</head>
+<body>
+    <section id="navbar">
+        <h1>MediBot</h1>
+    </section>
+    <section id="container">
+        <form class="login-container" action="/login" method="post">
+            <h1>Log in</h1>
+            <p>Don't have an account? <a class="signupswitch">Sign Up</a></p>
+            <div class="textbox">
+                <h2>Email</h2>
+                <input type="email" name="username" required>
+            </div>
+            <div class="textbox">
+                <h2>Password</h2>
+                <input type="password" name="password" required>
+            </div>
+            <div class="submit">
+                <input type="submit" class="btn" value="Login">
+                <p>Or</p>
+                <div class="myimg"><img class="google" src="/images/Google.png" alt="google login"></div>
+                <div class="myimg"><img src="/images/Apple.png" alt="apple login"></div>
+            </div>
+            <p>Forgot your password? <a class="resetswitch">Reset</a></p>
+        </form>
+        <form class="register-container" action="/register" method="post">
+            <h1>Create account</h1>
+            <p>Already registered? <a class="loginswitch">Log In</a></p>
+            <div class="textbox">
+                <h2>Email</h2>
+                <input type="email" name="username" required>
+            </div>
+            <div class="textbox">
+                <h2>Password</h2>
+                <input type="password" name="password" required>
+            </div>
+            <div class="submit">
+                <input type="submit" class="btn" value="Register">
+                <p>Or</p>
+                <div class="myimg"><img class="google" src="/images/Google.png" alt="google login"></div>
+                <div class="myimg"><img src="/images/Apple.png" alt="apple login"></div>
+            </div>
+        </form>
+        <form class="reset-container" action="/reset" method="post">
+            <h1>Reset Password</h1>
+            <p>Don't have an account? <a class="sswitch">Sign Up</a></p>
+            <div class="textbox">
+                <h2>Email</h2>
+                <input type="email" name="username" required>
+            </div>
+            <div class="diff-textbox">
+                <h2>Verification Code</h2>
+                <div class="verify">
+                    <input type="text" name="verificationCode" required>
+                    <button id="verifycode">Verify</button>
+                </div>
+            </div>
+            <div class="textbox" id="hiddenpass">
+                <h2>Password</h2>
+                <input type="password" name="password" required>
+            </div>
+            <div class="submit">
+                <input type="submit" class="btn" value="Register">
+            </div>
+        </form>
+        <div class="image-container">
+            <!-- <img src="Images/logo.png" alt="Login"> -->
+            <!-- <img src="Images/Login-Image.png" alt="Login"> -->
+            <img src="/images/Login Image.svg" alt="">
+        </div>
+    </section>
+</body>
+<script>
+    var login = document.querySelector('.login-container');
+    var register = document.querySelector('.register-container');
+    var reset = document.querySelector('.reset-container');
+    var loginBtn = document.querySelector('.loginswitch');
+    var registerBtn = document.querySelector('.signupswitch');
+    var resetBtn = document.querySelector('.resetswitch');
+    var exitreset = document.querySelector('.sswitch');
+    loginBtn.addEventListener('click', function(){
+        login.style.display = 'flex';
+        register.style.display = 'none';
+        image.style.display = 'flex';
+    });
+    registerBtn.addEventListener('click', function(){
+        login.style.display = 'none';
+        register.style.display = 'flex';
+        image.style.display = 'flex';
+    });
+    resetBtn.addEventListener('click', function(){
+        login.style.display = 'none';
+        register.style.display = 'none';
+        reset.style.display = 'flex';
+    });
+    exitreset.addEventListener('click', function(){
+        login.style.display = 'none';
+        register.style.display = 'flex';
+        reset.style.display = 'none';
+    });
+
+    var verify = document.getElementById('verifycode');
+    var veripass = document.getElementById('hiddenpass');
+    var verisubmit = document.querySelector('.reset-container .submit');
+    verify.addEventListener('click', function(){
+        var code = document.querySelector('.verify input').value;
+        if(code == null || code == ''){
+            alert('Code invalid');
+        }else{
+            alert('code-verified');
+            veripass.style.display = 'flex';
+            verisubmit.style.display = 'flex';
+        }
+    });
+</script>
+</html>

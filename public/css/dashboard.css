@@ -1,0 +1,125 @@
+*{
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    margin: 0;
+    padding: 0;
+    transition: all 0.3s;
+}
+body{
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+}
+#navbar{
+    width: 5vw;
+    height: 100vh;
+    position: absolute;
+    left: 0;
+    top: 0;
+    background-color: #ffffff;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    box-shadow: 0 0 1vw rgba(0, 0, 0, 0.1);
+}
+#navbar img{
+    width: 3vw;
+    height: auto;
+}
+#navbar ul{
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+}
+#navbar ul li{
+    width: 5vw;
+    height: 5vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+#navbar ul li a{
+    display: none;
+}
+.material-symbols-outlined{
+    color: black;
+    font-size: 1.5vw;
+    font-weight: 400;
+}
+#navbar ul li:last-child .material-symbols-outlined{
+    color: rgb(236, 5, 5);
+}
+.material-symbols-outlined:hover{
+    color: #00bfa5;
+}
+
+#data-capture{
+    margin-left: 8vw;
+    border-right: 1px solid rgba(0, 0, 0, 0.2);
+    width: 32vw;
+    height: 80vh;
+    display: flex;
+    justify-content: start;
+    padding-left: 2vw;
+    flex-direction: column;
+}
+#data-capture h1{
+    width: 80%;
+}
+#capture{
+    width: 80%;
+    height: 40%;
+    display: flex;
+    justify-content: start;
+    column-gap: 1vw;
+    align-items: center;
+}
+#capture img{
+    width: 13vw;
+    height: 100%;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+}
+.buttons{
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    row-gap: 1vh;
+    justify-content: end;
+}
+.buttons p{
+    font-size: .8vw;
+}
+.buttons input{
+    width: 15vw;
+    height: 4vh;
+    background-color: white;
+    color: #00bfa5;
+    font-size: 1vw;
+}
+.submit-image{
+    display: flex;
+    row-gap: 1vh;
+    align-items: end;
+}
+.submit-image button{
+    margin-top: 1vh;
+    width: 13.1vw;
+    height: 4vh;
+    border: 1px solid #00bfa5;
+    background-color: white;
+    color: #00bfa5;
+    font-size: 1vw;
+}
+.submit-image button:hover{
+    background-color: #00bfa5;
+    color: white;
+}
+.submit-image a{
+    text-decoration: none;
+    font-size: .7vw;
+}

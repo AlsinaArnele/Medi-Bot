@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MediBot | Home</title>
+    <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png">
+    <link rel="manifest" href="/favicon/site.webmanifest">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <link rel="stylesheet" href="/css/dashboard.css">
+</head>
+<body>
+    <section id="navbar">
+        <img src="/images/logo.png" alt="Logo">
+        <nav>
+            <ul>
+                <li><span class="material-symbols-outlined">dashboard</span><a href="Dashboard.html">Home</a></li>
+                <li><span class="material-symbols-outlined">person</span><a href="Profile.html">Profile</a></li>
+                <li><span class="material-symbols-outlined">history</span><a href="About.html">About</a></li>
+                <!-- <li></li> -->
+                <li></li>
+                <li><span class="material-symbols-outlined">settings</span><a href="Contact.html">Contact</a></li>
+                <li><span class="material-symbols-outlined">logout</span><a href="login.html">Logout</a></li>
+            </ul>
+        </nav>
+    </section>
+    <section id="data-capture">
+        <h1>Image Capture</h1>
+        <div id="capture">
+            <img src="/images/logo.png" alt="Capture">
+            <div class="buttons">
+                <p>*Images should be at most 5MB<br/>
+                    and of size 500x500.</p>
+                <!-- Image inputs -->
+                <input type="file" id="image-input" accept="image/*" capture="camera"/>
+            </div>
+        </div>
+        <div class="submit-image">
+            <button type="submit">Submit Image</button>
+            <p><a href="">How do we process your data?*</a></p>
+        </div>
+    </section>
+</body>
+</html>

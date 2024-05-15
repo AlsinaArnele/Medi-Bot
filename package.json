@@ -1,0 +1,16 @@
+{
+  "name": "medi-bot-node",
+  "version": "1.0.0",
+  "description": "Application that leverages IBM LLM to generate suggestions for locally available solutions to common wounds and illnesses",
+  "main": "index.js",
+  "scripts": {
+    "test": "npm start index.js"
+  },
+  "author": "Ronald Levis Kibet",
+  "license": "ISC",
+  "dependencies": {
+    "bcrypt": "^5.1.1",
+    "express": "^4.19.2",
+    "mysql": "^2.18.1"
+  }
+}
