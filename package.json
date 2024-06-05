@@ -9,8 +9,12 @@
   "author": "Ronald Levis Kibet",
   "license": "ISC",
   "dependencies": {
+    "@ibm-cloud/cloudant": "^0.9.1",
     "bcrypt": "^5.1.1",
+    "dotenv": "^16.4.5",
     "express": "^4.19.2",
-    "mysql": "^2.18.1"
+    "express-session": "^1.18.0",
+    "ibm-cloud-sdk-core": "^4.3.1",
+    "nodemailer": "^6.9.13"
   }
 }

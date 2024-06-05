@@ -19,28 +19,62 @@
                 <li><span class="material-symbols-outlined">dashboard</span><a href="Dashboard.html">Home</a></li>
                 <li><span class="material-symbols-outlined">person</span><a href="Profile.html">Profile</a></li>
                 <li><span class="material-symbols-outlined">history</span><a href="About.html">About</a></li>
-                <!-- <li></li> -->
                 <li></li>
                 <li><span class="material-symbols-outlined">settings</span><a href="Contact.html">Contact</a></li>
                 <li><span class="material-symbols-outlined">logout</span><a href="login.html">Logout</a></li>
             </ul>
         </nav>
     </section>
-    <section id="data-capture">
-        <h1>Image Capture</h1>
-        <div id="capture">
-            <img src="/images/logo.png" alt="Capture">
-            <div class="buttons">
-                <p>*Images should be at most 5MB<br/>
-                    and of size 500x500.</p>
-                <!-- Image inputs -->
-                <input type="file" id="image-input" accept="image/*" capture="camera"/>
+    <div class="history">
+        <form action="" method="post">
+            <span class="material-symbols-outlined">search</span>
+            <input type="text" placeholder="Search" name="search" id="search">
+        </form>
+        <div class="history-content">
+            <div class="history-item">
+                    <h2>Diagnosis</h2>
+                    <p>Diagnosis: <span>Diabetes</span></p>
+                    <p>Confidence: <span>90%</span></p>
+                    <p>Time: <span>12:00</span></p>
+            </div>
+            <div class="history-item">
+                    <h2>Diagnosis</h2>
+                    <p>Diagnosis: <span>Diabetes</span></p>
+                    <p>Confidence: <span>90%</span></p>
+                    <p>Time: <span>12:00</span></p>
+            </div>
+            <div class="history-item">
+                    <h2>Diagnosis</h2>
+                    <p>Diagnosis: <span>Diabetes</span></p>
+                    <p>Confidence: <span>90%</span></p>
+                    <p>Time: <span>12:00</span></p>
             </div>
         </div>
-        <div class="submit-image">
-            <button type="submit">Submit Image</button>
-            <p><a href="">How do we process your data?*</a></p>
+    </div>
+    <form id="data-capture" action="" method="post">
+        <div class="cap-content">
+            <div class="text">
+                <span class="material-symbols-outlined" onclick="toggleUpload()">upload</span>
+                <h1>Upload Image</h1>
+                <h2>Image must be less than <B>2MB</B> in size.</h2>
+            </div>
+            <button type="submit">Upload</button>
         </div>
-    </section>
+        <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+        <lottie-player src="https://lottie.host/e93d0024-ecdc-40b6-b7a0-9f79ed9b66a6/340FynCR7v.json" background="transparent"  speed="1"  style="width: 100px; height: 100px;display: none;" loop autoplay></lottie-player>
+        <textarea name="Prompt" id="user-prompt"></textarea>
+        <button class="submitButton">Submit</button>
+    </form>
+   <div class="data-out">
+         <div class="data">
+              <div class="col"></div>
+              <div class="col"></div>
+              <img src="/public/images/Login-Image.png" alt="">
+              <div class="col"></div>
+              <div class="col"></div>
+              <div class="col"></div>
+              <img src="/public/images/Login-Image.png" alt="">
+         </div>
+   </div>
 </body>
 </html>

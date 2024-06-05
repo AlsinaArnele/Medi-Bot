@@ -3,6 +3,9 @@
     padding: 0;
     transition: all 0.3s;
 }
+*:not(a), *:not(input){
+    cursor: url('/images/cursor.cur'), pointer;
+}
 input{
     padding-left: 1vw;
 }
