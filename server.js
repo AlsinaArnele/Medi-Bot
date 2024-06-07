@@ -1,6 +1,5 @@
 const express = require('express');
 const session = require('express-session');
-const bcrypt = require('bcrypt');
 const path = require('path');
 const nodemailer = require('nodemailer');
 const bodyParser = require('body-parser');
@@ -20,6 +19,7 @@ cloudant.setServiceUrl(`https://${ACCOUNT_NAME}.cloudantnosqldb.appdomain.cloud`
 
 const app = express();
 app.use(bodyParser.json());
+app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'public')));
 
 let transporter = nodemailer.createTransport({
@@ -39,19 +39,18 @@ app.use(session({
 
 app.post('/login', async (req, res) => {
   const { email, password } = req.body;
-
   try {
     const user = await fetchUserLogin(email);
     if (user) {
-      const passwordMatch = await bcrypt.compare(password, user.user_password);
-      if (passwordMatch) {
+      if (password === user.user_password) {
         req.session.user = { email: user.user_email };
-        res.status(200).send('User logged in successfully');
+        return res.redirect('/dashboard');
       } else {
-        res.status(401).send('Incorrect password');
+        return res.redirect('/login');
       }
     } else {
       res.status(404).send('No user found with the given email');
+      res.redirect('/login');
     }
   } catch (err) {
     console.error('Error during login process:', err);
@@ -92,21 +91,16 @@ async function fetchUserLogin(email) {
 app.post('/register', (req, res) => {
   const { email, password } = req.body;
 
-  bcrypt.hash(password, 10, async (hashErr, hash) => {
-    if (hashErr) {
-      console.error('Error hashing password:', hashErr);
-      res.status(500).send('Internal Server Error');
-      return;
-    }
-
     var verificationCode = Math.floor(Math.random() * 1000000);
     try {
-      await sendVerificationEmail(email, verificationCode, hash);
-      res.status(201).send('User registered successfully');
+      sendVerificationEmail(email, verificationCode, password);
+      setTimeout(() => {
+        res.redirect('/login');
+      }, 5000);
     } catch (error) {
       res.status(500).send('Internal Server Error');
     }
-  });
+  
 });
 
 async function sendVerificationEmail(email, verificationCode, hash) {
@@ -132,6 +126,7 @@ async function checkDatabaseAndCreateDocument(email, hash) {
     const existingDbsResponse = await cloudant.getAllDbs();
     const existingDbs = existingDbsResponse.result;
     const databaseName = "medibot_db";
+    var userid = Math.floor(Math.random() * 1000000).toString();
 
     if (!existingDbs.includes(databaseName)) {
       await cloudant.putDatabase({ db: databaseName });
@@ -139,7 +134,7 @@ async function checkDatabaseAndCreateDocument(email, hash) {
     }
 
     const sampleData = [
-      ["2", "levis", email, hash, "N", "N", "N", "N", "N", "N", "N", "N", "N", "N", "N", "N", "N", "N", "N", "N", "N", "N", "N"]
+      [userid, "user", email, hash, "N", "N", "N", "N", "N", "N", "N", "N", "N", "N", "N", "N", "N", "N", "N", "N", "N", "N", "N"]
     ];
 
     for (const document of sampleData) {
@@ -216,15 +211,52 @@ async function checkDatabaseAndCreateDocument(email, hash) {
   }
 }
 
-app.post('/reset', (req, res) => {
-  // Handle password reset form submission
+app.post('/reset', async (req, res) => {
+  const { email, newPassword } = req.body;
+
+  try {
+    const user = await fetchUserLogin(email);
+    if (user) {
+      user.user_password = newPassword;
+      const updateResponse = await cloudant.putDocument({
+        db: 'medibot_db',
+        docId: user._id,
+        document: user
+      });
+      if (updateResponse.result.ok) {
+        res.status(200).send('Password reset successfully');
+      } else {
+        res.status(500).send('Failed to reset password');
+      }
+    } else {
+      res.status(404).send('No user found with the given email');
+    }
+  } catch (err) {
+    console.error('Error during password reset:', err);
+    res.status(500).send('Internal server error');
+  }
 });
 
 app.get('/dashboard', (req, res) => {
   if (!req.session.user) {
-    return res.status(401).send('Unauthorized');
+    return res.redirect('/login');
   }
   res.sendFile(path.join(__dirname, 'public', 'homepage.html'));
+});
+app.get('/login', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'index.html'));
+});
+app.get('/signup', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'signup.html'));
+});
+app.get('/reset', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'reset.html'));
+});
+app.get('/profile', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'profile.html'));
+});
+app.get('/tos', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'tos.html'));
 });
 
 app.post('/logout', (req, res) => {
@@ -232,7 +264,7 @@ app.post('/logout', (req, res) => {
     if (err) {
       return res.status(500).send('Failed to log out');
     }
-    res.status(200).send('Logged out successfully');
+    res.redirect('/login');
   });
 });
 

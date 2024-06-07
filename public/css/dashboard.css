@@ -3,38 +3,56 @@
     font-weight: 300;
     margin: 0;
     padding: 0;
-    transition: all 0.3s;
+    color: #ffffff;
 }
 .cap-content button:hover{
-    border: 1px solid #00bfa5;
+    border: 1px solid #00856F;
     background-color: white;
     color: #00856F;
 }
-body{
-    background-color: #202329;
+body{    
+    background: hsla(170, 100%, 26%, 1);
+    background: radial-gradient(circle, hsla(170, 100%, 26%, 1) 0%, hsla(0, 0%, 9%, 1) 100%);
+    background: -moz-radial-gradient(circle, hsla(170, 100%, 26%, 1) 0%, hsla(0, 0%, 9%, 1) 100%);
+    background: -webkit-radial-gradient(circle, hsla(170, 100%, 26%, 1) 0%, hsla(0, 0%, 9%, 1) 100%);
+    filter: progid: DXImageTransform.Microsoft.gradient( startColorstr="#00856F", endColorstr="#161616", GradientType=1 );
     width: 100vw;
     height: 100vh;
     display: flex;
     align-items: center;
 }
 #navbar{
-    width: 5vw;
+    width: 10vw;
     height: 100vh;
     position: absolute;
+    border-top-right-radius: 1vw;
+    border-bottom-right-radius: 1vw;
     left: 0;
     top: 0;
-    background-color: #202329;
     display: flex;
     flex-direction: column;
-    justify-content: space-around;
+    justify-content: start;
     align-items: center;
     box-shadow: 0 0 1vw rgba(0, 0, 0, 0.555);
+    background-color: rgba(255, 255, 255, 0.062);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
 }
 #navbar img{
-    width: 3vw;
-    height: auto;
+    margin-top: 5vh;
+    width: 6vw;
+    height: 6vw;
+}
+#navbar p{
+    font-size: 2vh;
+    font-weight: 400;
+    margin-top: 1vh;
+    color: #ffffff;
 }
 #navbar ul{
+    width: max-content;
+    height: max-content;
+    margin-top: 6vh;
     list-style: none;
     display: flex;
     flex-direction: column;
@@ -42,26 +60,35 @@ body{
     align-items: center;
 }
 #navbar ul li{
-    width: 5vw;
+    width: 8vw;
     height: 5vw;
     display: flex;
     justify-content: center;
     align-items: center;
     cursor: pointer;
+    column-gap: 1vw;
 }
-#navbar ul li a{
-    display: none;
+nav ul li a{
+    color: white;
+    font-size: 2vh;
+    text-decoration: none;
 }
-.material-symbols-outlined{
-    color: rgb(255, 255, 255);
-    font-size: 1.5vw;
-    font-weight: 400;
+#navbar .material-symbols-outlined{
+    color: #ffffff;
+    font-size: 2vw;
+    font-weight: 300;
+    transition: all 0.4s;
 }
 #navbar ul li:last-child .material-symbols-outlined{
     color: rgb(236, 5, 5);
+    font-size: 2vw;
+    font-weight: 400;
 }
-.material-symbols-outlined:hover{
+#navbar li:hover .material-symbols-outlined{
     color: #00bfa5;
+}
+#navbar li:nth-last-child(2):hover #settings{
+    animation: rotate 1s infinite linear;
 }
 .history{
     width: 20vw;
@@ -70,9 +97,12 @@ body{
     justify-content: start;
     align-items: center;
     flex-direction: column;
-    margin-left: 6vw;
+    margin-left: 2vw;
     border-radius: 1vw;
     box-shadow: 0 0 1vw rgba(0, 0, 0, 0.555);
+    background-color: rgba(255, 255, 255, 0.062);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
 }
 .history form{
     display: flex;
@@ -107,6 +137,7 @@ body{
     justify-content: center;
     align-items: center;
     background-color: white;
+    color: #202329;
 }
 .history-content{
     width: 18vw;
@@ -117,8 +148,10 @@ body{
     flex-direction: column;
 }
 .history-item{
+    padding-top: 1vh;
+    padding-bottom: 1vh;
     width: 17vw;
-    height: 15vh;
+    height: max-content;
     padding-left: 1vw;
     display: flex;
     justify-content: center;
@@ -126,26 +159,15 @@ body{
     flex-direction: column;
     border-radius: 1vw;
     margin-top: 2vh;
-    background-color: #2E333D;
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
+    box-shadow: 0 0 1vw rgba(0, 0, 0, 0.1);
 }
 .history-item h2{
     font-size: 2vh;
     font-weight: 400;
-    margin-bottom: 1vh;
-    color: #00856F;
-}
-.history-item p{
-    font-size: 1.6vh;
-    font-weight: 300;
-    margin-bottom: 1vh;
     color: #ffffff;
 }
-
-
 #data-capture{
-    margin-left: 2vw;
+    margin-left: 13vw;
     width: 25vw;
     height: 96vh;
     display: flex;
@@ -153,8 +175,11 @@ body{
     align-items: center;
     padding-left: 2vw;
     flex-direction: column;
-    box-shadow: 0 0 1vw rgba(0, 0, 0, 0.555);
+    box-shadow: 0 0 1vh rgba(0, 0, 0, 0.555);
     border-radius: 1vw;
+    background-color: rgba(255, 255, 255, 0.062);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
 }
 .cap-content{
     padding-top: 2vw;
@@ -181,20 +206,18 @@ body{
     font-size: 1.5vw;
     font-weight: 400;
     margin-bottom: 1vh;
-    color: white;
 }
 .cap-content h2{
-    font-size: 1.2vh;
+    font-size: 1.5vh;
     font-weight: 400;
     margin-bottom: 1vh;
-    color: white;
 }
 .cap-content button{
     width: 12vw;
     height: 8vh;
-    background-color: #00bfa5;
+    background-color: #00856F;
     color: white;
-    border: 1px solid white;
+    border: 1px solid transparent;
     cursor: pointer;
     margin-bottom: -1.5vh;
     border-radius: 1vh;
@@ -203,15 +226,19 @@ body{
 .text .material-symbols-outlined{
     font-size: 4vw;
 }
+#data-capture h3{
+    margin-top: 2vh;
+}
 textarea{
     margin-top: 2vh;
-    width: 17vw;
+    width: 19vw;
     height: 20vh;
     padding-left: 3px;
     padding-top: 3px;
+    border-radius: 1vw;
 }
 textarea:focus{
-    border: 1px solid #00bfa5;
+    border: 1px solid #00856F;
     outline: none;
 }
 .submitButton{
@@ -219,50 +246,221 @@ textarea:focus{
     width: 19vw;
     height: 6vh;
     border: 1px solid white;
-    background-color: #00bfa5;
+    background-color: #00856F;
     color: white;
     border-radius: 1vh;
 }
 .submitButton:hover{
-    border: 1px solid #00bfa5;
+    border: 1px solid #00856F;
     background-color: white;
-    color: #00bfa5;
+    color: #00856F;
 }
 .data-out{
+    border-radius: 1vw;
     width: 32vw;
-    height: 80vh;
+    height: max-content;
     margin-left: 2vw;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    background-color: rgba(255, 255, 255, 0.062);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
 }
 .data{
-    padding-top: 2vh;
-    padding-left: 2vw;
+    padding: 2vh;
+    padding-bottom: 8vh;
     border-radius: 1vw;
     width: 32vw;
-    height: 94vh;
+    height: 86vh;
     display: flex;
-    justify-content: start;
+    justify-content: end;
     align-items: start;
     flex-direction: column;
     box-shadow: 0 0 1vw rgba(0, 0, 0, 0.555);
     row-gap: 1vh;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    scrollbar-width: thin;
+    background-color: transparent;
 }
 .col{
+    padding: 1vw;
     width: 28vw;
-    height: 6vh;
+    height: max-content;
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
     border-radius: 1vh;
-    background-color: rgba(46, 51, 61, 0.295);
-}
-.data img{
-    width: 10vw;
-    height: 10vw;
-    margin-top: 2vh;
-    border-radius: 1vw;
     box-shadow: 0 0 1vw rgba(0, 0, 0, 0.1);
+}
+.col p{
+    color: white;
+    font-size: 2vh;
+    line-height: 2.6vh;
+}
+
+/* profile page */
+#userUpdate{
+    margin-left: 13vw;
+    padding: 2vh;
+    width: 30vw;
+    height: 92vh;
+    display: flex;
+    justify-content: start;
+    align-items: start;
+    padding-left: 2vw;
+    flex-direction: column;
+    box-shadow: 0 0 1vh rgba(0, 0, 0, 0.555);
+    border-radius: 1vw;
+    background-color: rgba(255, 255, 255, 0.062);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+}
+#userUpdate h1, #userMedicals h1{
+    width: 100%;
+    font-size: 2vw;
+    font-weight: 400;
+    text-align: start;
+}
+#userUpdate p, #userMedicals p, #userMedicals h3{
+    width: 100%;
+    font-size: 2vh;
+    font-weight: 300;
+    text-align: start;
+    margin-bottom: 1vh;
+}
+.user-pfp{
+    margin-top: 1vh;
+    width:30vw;
+    height: 20vw;
+    margin-top: 2vh;
+    display: flex;
+    justify-content: start;
+    align-items: end;
+}
+.user-pfp img{
+    width: 70%;
+    height: auto;
+    aspect-ratio: 1/1;
+    box-shadow: 0 0 1vh rgba(0, 0, 0, 0.555);
+}
+.user-pfp select{
+    margin-left: 1vw;
+    width: 8vw;
+    height: 5vh;
+    margin-top: 2vh;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    padding-left: 1vw;
+    color: #202329;
+}
+.user-pfp select option{
+    color: #202329;
+}
+.user-pfp select:focus{
+    outline: none;
+    border: 1px solid #00856F;
+}
+.update-input{
+    width: 100%;
+    height: max-content;
+    display: flex;
+    justify-content: start;
+    align-items: start;
+    flex-direction: column;
+    margin-top: 2vh;
+}
+.update-input label{
+    font-size: 2vh;
+    font-weight: 300;
+}
+.update-input input{
+    border: none;
+    width: 69%;
+    height: 5vh;
+    background-color: rgba(255, 255, 255, 0.062);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-bottom: 1px solid #ffffff;
+    padding-left: 1%;
+    margin-top: 1vh;
+}
+.update-input input:focus{
+    outline: none;
+    border-bottom: 1px solid #00856F;
+}
+.update-buttons{
+    margin-top: 2vh;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 70%;
+    height: max-content;
+}
+.update-buttons button{
+    width: 10vw;
+    height: 6vh;
+    background-color: #00856F;
+    color: white;
+    border: 1px solid transparent;
+    cursor: pointer;
+    transition: all 0.4s linear;
+}
+.update-buttons button:hover{
+    border: 1px solid #00856F;
+    background-color: white;
+    color: #00856F;
+}
+#userMedicals{
+    margin-left: 2vw;
+    padding: 2vh;
+    width: 30vw;
+    height: 92vh;
+    display: flex;
+    justify-content: start;
+    align-items: start;
+    padding-left: 2vw;
+    flex-direction: column;
+    box-shadow: 0 0 1vh rgba(0, 0, 0, 0.555);
+    border-radius: 1vw;
+    background-color: rgba(255, 255, 255, 0.062);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+}
+#userMedicals h3{
+    margin-top: 2vh;
+}
+#userMedicals textarea{
+    width: 28vw;
+    height: 15vh;
+    padding: 1vh;
+    border-radius: unset;
+    margin-top: unset;
+    color: #202329;
+}
+#userMedicals button{
+    margin-top: 2.5vh;
+    width: 10vw;
+    height: 6vh;
+    background-color: #00856F;
+    color: white;
+    border: 1px solid transparent;
+    cursor: pointer;
+    transition: all 0.4s linear;
+}
+#userMedicals button:hover{
+    border: 1px solid #00856F;
+    background-color: white;
+    color: #00856F;
+}
+
+/* animations */
+@keyframes rotate{
+    0%{
+        transform: rotate(0deg);
+    }
+    100%{
+        transform: rotate(360deg);
+    }
 }

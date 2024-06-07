@@ -13,6 +13,11 @@ body{
     width: 100vw;
     height: 100vh;
     overflow: hidden;
+    background: hsla(170, 100%, 26%, 1);
+    background: radial-gradient(circle, hsla(170, 100%, 26%, 1) 0%, hsla(0, 0%, 9%, 1) 100%);
+    background: -moz-radial-gradient(circle, hsla(170, 100%, 26%, 1) 0%, hsla(0, 0%, 9%, 1) 100%);
+    background: -webkit-radial-gradient(circle, hsla(170, 100%, 26%, 1) 0%, hsla(0, 0%, 9%, 1) 100%);
+    filter: progid: DXImageTransform.Microsoft.gradient( startColorstr="#00856F", endColorstr="#161616", GradientType=1 );
 }
 a{
     color: #00856F;
@@ -63,10 +68,10 @@ form{
     display: flex;
 }
 .register-container{
-    display: none;
+    display: flex;
 }
 .reset-container{
-    display: none;
+    display: flex;
 }
 form h1{
     font-size: 2vw;

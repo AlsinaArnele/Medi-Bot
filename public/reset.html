@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Medi-bot | Reset</title>
+    <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png">
+    <link rel="manifest" href="/favicon/site.webmanifest">
+    <link rel="stylesheet" href="/css/login.css">
+</head>
+<body>
+    <section id="navbar">
+        <h1>MediBot</h1>
+    </section>
+    <section id="container">
+        <form class="reset-container" action="/reset" method="post">
+            <h1>Reset Password</h1>
+            <p>Don't have an account? <a href="/signup">Sign Up</a></p>
+            <div class="textbox">
+                <h2>Email</h2>
+                <input type="email" name="email" required>
+            </div>
+            <div class="diff-textbox">
+                <h2>Verification Code</h2>
+                <div class="verify">
+                    <input type="text" name="verificationCode" required>
+                    <button id="verifycode">Verify</button>
+                </div>
+            </div>
+            <div class="textbox" id="hiddenpass">
+                <h2>Password</h2>
+                <input type="password" name="password" required>
+            </div>
+            <div class="submit">
+                <input type="submit" class="btn" value="Register">
+            </div>
+        </form>
+        <div class="image-container">
+            <!-- <img src="Images/logo.png" alt="Login"> -->
+            <!-- <img src="Images/Login-Image.png" alt="Login"> -->
+            <img src="/images/Login Image.svg" alt="">
+        </div>
+    </section>
+</body>
+</html>

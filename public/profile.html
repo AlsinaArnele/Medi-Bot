@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MediBot | Home</title>
+    <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png">
+    <link rel="manifest" href="/favicon/site.webmanifest">
+    <script src="https://cdn.jsdelivr.net/npm/typeit@7.0.4/dist/typeit.min.js"></script>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <link rel="stylesheet" href="/css/dashboard.css">
+</head>
+<body>
+    <section id="navbar"> 
+        <form id="logout-form" action="/logout" method="POST" style="display: none;">
+            <button type="submit">Logout</button>
+        </form> 
+        <img src="/images/happy.jpg" alt="Logo">
+        <P>Good morning,</P>
+        <nav>
+            <ul>
+                <li><span class="material-symbols-outlined">dashboard</span><a href="/dashboard">Home</a></li>
+                <li><span class="material-symbols-outlined">person</span><a href="Profile.html">Profile</a></li>
+                <li><span class="material-symbols-outlined">history</span><a href="About.html">About</a></li>
+                <li></li>
+                <li><span class="material-symbols-outlined" id="settings">settings</span><a href="Contact.html">Contact</a></li>
+                <li><span class="material-symbols-outlined">logout</span><a href="/logout">Logout</a></li>
+            </ul>
+        </nav>
+    </section>
+    <form id="userUpdate" action="/userUpdate" method="post">
+        <h1>Account Details</h1>
+        <p>Update your MediBot details.</p>
+        <div class="user-pfp">
+            <img src="" alt="User Profile Picture">
+            <select name="pfp" id="pfp" title="Profile Picture">
+                <!-- default -->
+                <option value="happy.jpg" selected>Happy</option>
+                <option value="sad.jpg">Sad</option>
+                <option value="angry.jpg">Angry</option>
+                <option value="confused.jpg">Confused</option>
+                <option value="excited.jpg">Excited</option>
+                <option value="neutral.jpg">Neutral</option>
+            </select>
+        </div>
+        <div class="update-input">
+            <label for="name">Name</label>
+            <input type="text" name="name" id="name" required>
+        </div>
+        <div class="update-input">
+            <label for="email">Email</label>
+            <input type="email" name="email" id="email" required>
+        </div>
+        <div class="update-input">
+            <label for="password">Password</label>
+            <input type="password" name="password" id="password" required>
+        </div>
+        <div class="update-buttons">
+            <button type="submit">Update</button>
+            <button type="reset">Cancel</button>
+        </div>
+    </form>
+    <form id="userMedicals" action="/updateMedicals" method="post">
+        <h1>Medical History</h1>
+        <p><a href="/tos">Why do we need this?</a></p>
+        <h3>Existing Conditions</h3>
+        <textarea name="conditions" id="conditions"></textarea>
+        <h6> This could include chronic illnesses, past surgeries, or any ongoing health concerns.</h6>
+        <h3>Allergies</h3>
+        <textarea name="allergies" id="allergies"></textarea>
+        <h6>If you don't have any allergies, you can leave this section blank.</h6>
+        <h3>Medications</h3>
+        <textarea name="medications" id="medications"></textarea>
+        <h6>This includes prescription drugs, over-the-counter medications, vitamins or supplements.</h6>
+        <button type="submit">Update Details</button>
+    </form>
+</body>
+<script>
+    document.querySelector('.user-pfp img').src = '/images/' + document.getElementById('pfp').value;
+    document.getElementById('pfp').addEventListener('change', function() {
+        document.querySelector('.user-pfp img').src = '/images/' + this.value;
+    });
+</script>
+</html>

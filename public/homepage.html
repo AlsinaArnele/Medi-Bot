@@ -8,49 +8,28 @@
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png">
     <link rel="manifest" href="/favicon/site.webmanifest">
+    <script src="https://cdn.jsdelivr.net/npm/typeit@7.0.4/dist/typeit.min.js"></script>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
     <link rel="stylesheet" href="/css/dashboard.css">
 </head>
 <body>
     <section id="navbar">
-        <img src="/images/logo.png" alt="Logo">
+        <form id="logout-form" action="/logout" method="POST" style="display: none;">
+            <button type="submit">Logout</button>
+        </form> 
+        <img src="/images/happy.jpg" alt="Logo">
+        <P>Good morning,</P>
         <nav>
             <ul>
-                <li><span class="material-symbols-outlined">dashboard</span><a href="Dashboard.html">Home</a></li>
-                <li><span class="material-symbols-outlined">person</span><a href="Profile.html">Profile</a></li>
+                <li><span class="material-symbols-outlined">dashboard</span><a href="/dashboard">Home</a></li>
+                <li><span class="material-symbols-outlined">person</span><a href="/profile">Profile</a></li>
                 <li><span class="material-symbols-outlined">history</span><a href="About.html">About</a></li>
                 <li></li>
-                <li><span class="material-symbols-outlined">settings</span><a href="Contact.html">Contact</a></li>
-                <li><span class="material-symbols-outlined">logout</span><a href="login.html">Logout</a></li>
+                <li><span class="material-symbols-outlined" id="settings">settings</span><a href="Contact.html">Contact</a></li>
+                <li><span class="material-symbols-outlined">logout</span><a href="#" onclick="document.getElementById('logout-form').submit();">Logout</a></li>
             </ul>
         </nav>
     </section>
-    <div class="history">
-        <form action="" method="post">
-            <span class="material-symbols-outlined">search</span>
-            <input type="text" placeholder="Search" name="search" id="search">
-        </form>
-        <div class="history-content">
-            <div class="history-item">
-                    <h2>Diagnosis</h2>
-                    <p>Diagnosis: <span>Diabetes</span></p>
-                    <p>Confidence: <span>90%</span></p>
-                    <p>Time: <span>12:00</span></p>
-            </div>
-            <div class="history-item">
-                    <h2>Diagnosis</h2>
-                    <p>Diagnosis: <span>Diabetes</span></p>
-                    <p>Confidence: <span>90%</span></p>
-                    <p>Time: <span>12:00</span></p>
-            </div>
-            <div class="history-item">
-                    <h2>Diagnosis</h2>
-                    <p>Diagnosis: <span>Diabetes</span></p>
-                    <p>Confidence: <span>90%</span></p>
-                    <p>Time: <span>12:00</span></p>
-            </div>
-        </div>
-    </div>
     <form id="data-capture" action="" method="post">
         <div class="cap-content">
             <div class="text">
@@ -62,19 +41,40 @@
         </div>
         <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
         <lottie-player src="https://lottie.host/e93d0024-ecdc-40b6-b7a0-9f79ed9b66a6/340FynCR7v.json" background="transparent"  speed="1"  style="width: 100px; height: 100px;display: none;" loop autoplay></lottie-player>
+        <h3>Severity Analysis</h3>
         <textarea name="Prompt" id="user-prompt"></textarea>
         <button class="submitButton">Submit</button>
     </form>
    <div class="data-out">
-         <div class="data">
-              <div class="col"></div>
-              <div class="col"></div>
-              <img src="/public/images/Login-Image.png" alt="">
-              <div class="col"></div>
-              <div class="col"></div>
-              <div class="col"></div>
-              <img src="/public/images/Login-Image.png" alt="">
+         <div class="data" id="data">
+              <div class="col"><p id="col-output"></p></div>
          </div>
    </div>
+   <div class="history">
+    <form action="" method="post">
+        <span class="material-symbols-outlined">search</span>
+        <input type="text" placeholder="Search" name="search" id="search">
+    </form>
+    <div class="history-content">
+        <div class="history-item">
+                <h2>Diagnosis</h2>
+        </div>
+        <div class="history-item">
+                <h2>Diagnosis</h2>
+        </div>
+        <div class="history-item">
+                <h2>Diagnosis</h2>
+        </div>
+    </div>
+</div>
 </body>
+<script>
+    var song = "Hello, I am MediBot. I am here to help you with your health issues. Please upload an image of your medical report or type in your symptoms.";
+    new TypeIt("#col-output", {
+            strings: [song],
+            speed: 10,
+            breakLines: false,
+            loop: false
+        }).go();
+</script>
 </html>
