@@ -12,12 +12,13 @@
 </head>
 <body>
     <section id="navbar">
-        <h1>MediBot</h1>
+        <h1>VITA</h1>
     </section>
     <section id="container">
         <form class="login-container" action="/login" method="post">
             <h1>Log in</h1>
             <p>Don't have an account? <a href="/signup">Sign Up</a></p>
+            <p id="errorMessage" style="color: red;"></p>
             <div class="textbox">
                 <h2>Email</h2>
                 <input type="email" name="email" required>
@@ -28,9 +29,6 @@
             </div>
             <div class="submit">
                 <input type="submit" class="btn" value="Login">
-                <p>Or</p>
-                <div class="myimg"><img class="google" src="/images/Google.png" alt="google login"></div>
-                <div class="myimg"><img src="/images/Apple.png" alt="apple login"></div>
             </div>
             <p>Forgot your password? <a href="/reset">Reset</a></p>
         </form>
@@ -41,4 +39,13 @@
         </div>
     </section>
 </body>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const urlParams = new URLSearchParams(window.location.search);
+      const message = urlParams.get('message');
+      if (message) {
+        const messageElement = document.getElementById('errorMessage');
+        messageElement.innerText = message;}
+    });
+</script>
 </html>

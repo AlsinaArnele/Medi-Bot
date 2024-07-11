@@ -1,4 +1,6 @@
 *{
+    font-family: "Lato", sans-serif;
+    color: #262626;
     margin: 0;
     padding: 0;
     transition: all 0.3s;
@@ -9,19 +11,31 @@
 input{
     padding-left: 1vw;
 }
+h1{
+    font-size: 2vw;
+}
+h2{
+    font-size: 2vh;
+}
+p{
+    font-size: 1vw;
+}
 body{
     width: 100vw;
     height: 100vh;
     overflow: hidden;
-    background: hsla(170, 100%, 26%, 1);
-    background: radial-gradient(circle, hsla(170, 100%, 26%, 1) 0%, hsla(0, 0%, 9%, 1) 100%);
-    background: -moz-radial-gradient(circle, hsla(170, 100%, 26%, 1) 0%, hsla(0, 0%, 9%, 1) 100%);
-    background: -webkit-radial-gradient(circle, hsla(170, 100%, 26%, 1) 0%, hsla(0, 0%, 9%, 1) 100%);
-    filter: progid: DXImageTransform.Microsoft.gradient( startColorstr="#00856F", endColorstr="#161616", GradientType=1 );
+    background-color: #F5F5F5;
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: center;
 }
 a{
     color: #00856F;
     text-decoration: none;
+}
+a:hover{
+    cursor: pointer;
 }
 #navbar{
     width: 100vw;
@@ -48,14 +62,24 @@ a{
     align-items: center;
     background-color: #F5F5F5;
 }
+.reset{
+    margin-top: 5vh;
+    width: 40vw;
+    height: 70vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: #F5F5F5;
+    box-shadow: 0 0 1vw rgba(0, 0, 0, 0.1);
+    z-index: 3;
+}
 form{
     margin-top: 5vh;
     width: 40vw;
     height: 70vh;
     padding-left: 3vw;
-    background-color: rgba(255, 255, 255, 0.2);
-    border-top: 1px solid #00856F;
-    border-right: 1px solid #00856F;
+    background-color: #ffffff33;
     box-shadow: 0 0 1vw rgba(0, 0, 0, 0.1);
     display: flex;
     flex-direction: column;
@@ -63,6 +87,24 @@ form{
     justify-content: center;
     row-gap: 2vh;
     z-index: 3;
+}
+.reset form{
+    margin-top: 5vh;
+    width: 35vw;
+    height: max-content;
+    padding-left: 3vw;
+    background-color: rgba(255, 255, 255, 0.2);
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    justify-content: center;
+    row-gap: 2vh;
+    z-index: 3;
+    box-shadow: unset;
+}
+.reset form:last-child{
+    display: none;
+    margin-top: 2vh;
 }
 .login-container{
     display: flex;
@@ -74,11 +116,6 @@ form{
     display: flex;
 }
 form h1{
-    font-size: 2vw;
-    margin-bottom: 2vh;
-}
-form p{
-    font-size: 1vw;
     margin-bottom: 2vh;
 }
 .textbox, .diff-textbox{
@@ -104,15 +141,10 @@ form p{
 }
 .textbox h2, .diff-textbox h2{
     font-weight: 300;
-    font-size: .8vw;
     padding-left: 1vw;
     width: 19vw;
     height: 2vh;
     background-color: white;
-}
-
-.reset-container div:nth-child(5){
-    display: none;
 }
 .diff-textbox .verify{
     display: flex;
@@ -120,9 +152,10 @@ form p{
     align-items: center;
     width: 30vw;
     height: 5vh;
+    background-color: transparent;
 }
 .verify input{
-    width: 20vw;
+    width: 19vw;
     height: 5vh;
     font-size: 1vw;
     border: none;
@@ -136,7 +169,8 @@ form p{
 }
 .verify button{
     margin: unset;
-    width: 10vw;
+    margin-left: 1vw;
+    width: 9vw;
     height: 5vh;
     font-size: 1vw;
     border: 1px solid #00856F;
@@ -147,10 +181,6 @@ form p{
     background-color: #00856F;
     color: white;
 }
-.reset-container .submit{
-    display: none;
-    justify-content: center;
-}
 .diff-textbox{
     background-color: transparent;
 }
@@ -159,7 +189,7 @@ form p{
     width: 30vw;
     height: 10vh;
     display: flex;
-    justify-content: start;
+    justify-content: center;
     align-items: center;
 }
 .submit input{
@@ -219,4 +249,75 @@ form p{
     width: auto;
     height: 90vh;
     margin-left: -13vw;
+}
+#errorMessage{
+    color: red;
+    margin: unset;
+}
+
+/* Responsiveness */
+@media screen and (max-width: 768px){
+    #navbar{
+        z-index: 5;
+    }
+    h1{
+        font-size: 4vh;
+    }   
+    #navbar h1{
+        font-size: 3vh;
+    }
+    h2{
+        font-size: 3vh;
+    }
+    p{
+        font-size: 2vh;
+    }
+    .textbox h2{
+        font-size: 2vh;
+    }
+    #container{
+        position: absolute;
+        left: 0;
+        bottom: 5vh;
+        width: 100vw;
+        height: 90vh;
+        flex-direction: column-reverse;
+    }
+    .image-container{
+        height: 50%;
+        width: 100%;
+    }
+    .image-container img{
+        margin-left: -30vw;
+        width: auto;
+        height: 100%;
+    }
+    form{
+        padding-left: 3vw;
+        width: 94%;
+        height: 70%;
+        border-radius: 2vh;
+        margin-left: 0;
+        box-shadow: none;
+    }
+    .textbox{
+        width: 90%;
+        height: max-content;
+    }
+    .textbox input{
+        padding-left: 2%;
+        width: 98%;
+        height: 5vh;
+        font-size: 2vh;
+    }
+    .submit{
+        width: 95%;
+        flex-direction: column;
+        height: max-content;
+        align-items: start;
+    }
+    .submit input{
+        width: 95%;
+        font-size: 2vh;
+    }
 }

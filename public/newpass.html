@@ -15,18 +15,23 @@
         <h1>MediBot</h1>
     </section>
     <section id="container">
-            <form class="reset-container" action="/reset" method="post">
+            <form class="reset-container" action="/newpass" method="post">
                 <h1>Reset Password</h1>
                 <p>Don't have an account? <a href="/signup">Sign Up</a></p>
                 <p id="errorMessage"></p>
                 <div class="textbox">
-                    <h2>Email</h2>
-                    <input type="email" name="email" required>
+                    <h2>Verification Code</h2>
+                    <input type="text" name="code" required>
+                </div>
+                <div class="textbox">
+                    <h2>Password</h2>
+                    <input type="password" name="newPassword" required>
                 </div>
                 <div class="submit">
-                    <input type="submit" class="btn" value="Get Code">
+                    <input type="submit" class="btn" value="Reset Password">
                 </div>
             </form>
+        </div>
         <div class="image-container">
             <!-- <img src="Images/logo.png" alt="Login"> -->
             <!-- <img src="Images/Login-Image.png" alt="Login"> -->

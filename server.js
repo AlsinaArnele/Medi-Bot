@@ -3,6 +3,7 @@ const session = require('express-session');
 const path = require('path');
 const nodemailer = require('nodemailer');
 const bodyParser = require('body-parser');
+const bcrypt = require('bcrypt');
 const { CloudantV1 } = require('@ibm-cloud/cloudant');
 const { IamAuthenticator } = require('ibm-cloud-sdk-core');
 require('dotenv').config();
@@ -42,19 +43,20 @@ app.post('/login', async (req, res) => {
   try {
     const user = await fetchUserLogin(email);
     if (user) {
-      if (password === user.user_password) {
+      const match = await bcrypt.compare(password, user.user_password);
+      if (match) {
         req.session.user = { email: user.user_email };
         return res.redirect('/dashboard');
       } else {
-        return res.redirect('/login');
+        res.status(409).redirect('index.html?message=Incorrect%20password%20or%20email');
       }
     } else {
       res.status(404).send('No user found with the given email');
-      res.redirect('/login');
+      res.status(409).redirect('index.html?message=Incorrect%20password%20or%20email');
     }
   } catch (err) {
     console.error('Error during login process:', err);
-    res.status(500).send('Internal server error');
+    res.status(409).redirect('index.html?message=Internal%20server%20error!');
   }
 });
 
@@ -88,22 +90,22 @@ async function fetchUserLogin(email) {
   }
 }
 
-app.post('/register', (req, res) => {
+app.post('/register', async (req, res) => {
   const { email, password } = req.body;
+  const verificationCode = Math.floor(Math.random() * 1000000);
 
-    var verificationCode = Math.floor(Math.random() * 1000000);
-    try {
-      sendVerificationEmail(email, verificationCode, password);
-      setTimeout(() => {
-        res.redirect('/login');
-      }, 5000);
-    } catch (error) {
-      res.status(500).send('Internal Server Error');
-    }
-  
+  try {
+    await sendVerificationEmail(email, verificationCode, password);
+    setTimeout(() => {
+      res.status(409).redirect('index.html?message=Incorrect%20password%20or%20email');
+    }, 5000);
+  } catch (error) {
+    console.error('Error during registration:', error);
+    res.status(409).redirect('signup.html?message=Internal%20server%20error!');
+  }
 });
 
-async function sendVerificationEmail(email, verificationCode, hash) {
+async function sendVerificationEmail(email, verificationCode, password) {
   let mailOptions = {
     from: process.env.EMAIL_USER,
     to: email,
@@ -113,11 +115,30 @@ async function sendVerificationEmail(email, verificationCode, hash) {
 
   transporter.sendMail(mailOptions, async (error, info) => {
     if (error) {
-      console.log('Error occurred while sending email:', error);
+      console.error('Error occurred while sending email:', error);
       throw error;
     }
     console.log('Email sent:', info.response);
-    await checkDatabaseAndCreateDocument(email, hash);
+    const hashedPassword = await bcrypt.hash(password, 10);
+    await checkDatabaseAndCreateDocument(email, hashedPassword);
+  });
+}
+
+async function sendResetEmail(email, verificationCode) {
+  let mailOptions = {
+    from: process.env.EMAIL_USER,
+    to: email,
+    subject: 'Email Verification',
+    text: `Hello, you requested to reset your password. Here is your verification code: ${verificationCode}`
+  };
+
+  transporter.sendMail(mailOptions, async (error, info) => {
+    if (error) {
+      console.error('Error occurred while sending email:', error);
+      throw error;
+    }
+    console.log('Email sent:', info.response);
+    await checkDatabaseAndCreateReset(email, verificationCode);
   });
 }
 
@@ -126,83 +147,85 @@ async function checkDatabaseAndCreateDocument(email, hash) {
     const existingDbsResponse = await cloudant.getAllDbs();
     const existingDbs = existingDbsResponse.result;
     const databaseName = "medibot_db";
-    var userid = Math.floor(Math.random() * 1000000).toString();
+    const userId = Math.floor(Math.random() * 1000000).toString();
 
     if (!existingDbs.includes(databaseName)) {
       await cloudant.putDatabase({ db: databaseName });
       console.log(`The database '${databaseName}' has been created.`);
     }
 
-    const sampleData = [
-      [userid, "user", email, hash, "N", "N", "N", "N", "N", "N", "N", "N", "N", "N", "N", "N", "N", "N", "N", "N", "N", "N", "N"]
-    ];
+    const jsonDocument = {
+      "_id": userId,
+      "user_email": email,
+      "user_password": hash
+    };
 
-    for (const document of sampleData) {
-      const [
-        id, user_name, user_email, user_password, Penicillin, Latex, Pollen, Nuts, Shellfish,
-        Diabetes, Hypertension, Heart_Disease, Asthma, Cancer, Antihypertensives, Insulin, Anticoagulants,
-        Asthma_Inhalers, Smoker, Non_Smoker, Alcohol_Consumption, Regular_Exercise, Vegetarian_Vegan_Diet
-      ] = document;
+    const newDocumentResponse = await cloudant.postDocument({
+      db: databaseName,
+      document: jsonDocument
+    });
 
-      const jsonDocument = {
-        "_id": id,
-        "user_name": user_name,
-        "user_email": user_email,
-        "user_password": user_password,
-        "Penicillin": Penicillin,
-        "Latex": Latex,
-        "Pollen": Pollen,
-        "Nuts": Nuts,
-        "Shellfish": Shellfish,
-        "Diabetes": Diabetes,
-        "Hypertension": Hypertension,
-        "Heart Disease": Heart_Disease,
-        "Asthma": Asthma,
-        "Cancer": Cancer,
-        "Antihypertensives": Antihypertensives,
-        "Insulin": Insulin,
-        "Anticoagulants": Anticoagulants,
-        "Asthma Inhalers": Asthma_Inhalers,
-        "Smoker": Smoker,
-        "Non-Smoker": Non_Smoker,
-        "Alcohol Consumption": Alcohol_Consumption,
-        "Regular Exercise": Regular_Exercise,
-        "Vegetarian/Vegan Diet": Vegetarian_Vegan_Diet
-      };
+    if (newDocumentResponse.result.ok) {
+      console.log(`Document '${userId}' successfully created.`);
+    } else {
+      console.error(`Failed to create document '${userId}'.`);
+    }
+  } catch (err) {
+    console.error('Error: ', err);
+    throw err;
+  }
+}
 
-      try {
-        const existingDoc = await cloudant.getDocument({
+async function checkDatabaseAndCreateReset(email, verificationCode) {
+  try {
+    const databaseName = "medibot_reset";
+    const id = `reset_${email}`;
+
+    const existingDbsResponse = await cloudant.getAllDbs();
+    const existingDbs = existingDbsResponse.result;
+    if (!existingDbs.includes(databaseName)) {
+      await cloudant.putDatabase({ db: databaseName });
+      console.log(`The database '${databaseName}' has been created.`);
+    }
+
+    const jsonDocument = {
+      _id: id,
+      user_email: email,
+      verification_code: verificationCode
+    };
+
+    try {
+      const existingDoc = await cloudant.getDocument({
+        db: databaseName,
+        docId: id
+      });
+
+      jsonDocument._rev = existingDoc.result._rev;
+      const updateDocumentResponse = await cloudant.putDocument({
+        db: databaseName,
+        docId: id,
+        document: jsonDocument
+      });
+
+      if (updateDocumentResponse.result.ok) {
+        console.log(`Document '${id}' successfully updated.`);
+      } else {
+        console.error(`Failed to update document '${id}'.`);
+      }
+    } catch (err) {
+      if (err.status === 404) {
+        const newDocumentResponse = await cloudant.postDocument({
           db: databaseName,
-          docId: id
-        });
-
-        jsonDocument._rev = existingDoc.result._rev;
-        const updateDocumentResponse = await cloudant.putDocument({
-          db: databaseName,
-          docId: id,
           document: jsonDocument
         });
 
-        if (updateDocumentResponse.result.ok) {
-          console.log(`Document '${id}' successfully updated.`);
+        if (newDocumentResponse.result.ok) {
+          console.log(`Document '${id}' successfully created.`);
         } else {
-          console.error(`Failed to update document '${id}'.`);
+          console.error(`Failed to create document '${id}'.`);
         }
-      } catch (err) {
-        if (err.status === 404) {
-          const newDocumentResponse = await cloudant.postDocument({
-            db: databaseName,
-            document: jsonDocument
-          });
-
-          if (newDocumentResponse.result.ok) {
-            console.log(`Document '${id}' successfully created.`);
-          } else {
-            console.error(`Failed to create document '${id}'.`);
-          }
-        } else {
-          console.error('Error: ', err);
-        }
+      } else {
+        console.error('Error: ', err);
       }
     }
   } catch (err) {
@@ -212,28 +235,86 @@ async function checkDatabaseAndCreateDocument(email, hash) {
 }
 
 app.post('/reset', async (req, res) => {
-  const { email, newPassword } = req.body;
-
+  const { email } = req.body;
   try {
     const user = await fetchUserLogin(email);
     if (user) {
-      user.user_password = newPassword;
-      const updateResponse = await cloudant.putDocument({
-        db: 'medibot_db',
-        docId: user._id,
-        document: user
-      });
-      if (updateResponse.result.ok) {
-        res.status(200).send('Password reset successfully');
-      } else {
-        res.status(500).send('Failed to reset password');
-      }
+      const verificationCode = Math.floor(Math.random() * 1000000);
+      await sendResetEmail(email, verificationCode);
+      req.session.email = email;
+      res.redirect('/resetpass');
     } else {
-      res.status(404).send('No user found with the given email');
+      res.status(409).redirect('index.html?message=Incorrect%20password%20or%20email');
     }
   } catch (err) {
     console.error('Error during password reset:', err);
-    res.status(500).send('Internal server error');
+    res.status(409).redirect('index.html?message=Internal%20server%20error!');
+  }
+});
+
+app.post('/newpass', async (req, res) => {
+  try {
+    const { newPassword, code } = req.body;
+    const email = req.session.email;
+    const resetDatabaseName = "medibot_reset";
+    const userDatabaseName = "medibot_db";
+
+    if (!newPassword || !email || !code) {
+      res.status(409).redirect('index.html?message=Invalid%20%verification%20%code!');
+    }
+
+    const resetQuery = {
+      selector: {
+        user_email: email,
+        verification_code: parseInt(code)
+      }
+    };
+
+    const resetResponse = await cloudant.postFind({
+      db: resetDatabaseName,
+      selector: resetQuery.selector
+    });
+
+    if (resetResponse.result.docs.length === 0) {
+      return res.status(400).send('Invalid verification code');
+    }
+
+    const hashedPassword = await bcrypt.hash(newPassword, 10);
+
+    const userQuery = {
+      selector: {
+        user_email: email
+      },
+      fields: ["_id", "user_email", "user_password", "_rev"]
+    };
+
+    const userResponse = await cloudant.postFind({
+      db: userDatabaseName,
+      selector: userQuery.selector,
+      fields: userQuery.fields
+    });
+
+    if (userResponse.result.docs.length === 0) {
+      res.status(409).redirect('index.html?message=No%20user%20found%20with%20the%20given%20email');
+    }
+
+    const user = userResponse.result.docs[0];
+    user.user_password = hashedPassword;
+
+    const updateResponse = await cloudant.putDocument({
+      db: userDatabaseName,
+      docId: user._id,
+      document: user
+    });
+
+    if (updateResponse.result.ok) {
+      res.status(409).redirect('index.html?message=Password%20reset%20successful');
+    } else {
+      res.status(409).redirect('index.html?message=Password%20reset%20failed');
+    }
+  } catch (err) {
+    console.error('Error: ', err);
+    res.status(409).redirect('index.html?message=An%20error%20occurred');
   }
 });
 
@@ -243,18 +324,30 @@ app.get('/dashboard', (req, res) => {
   }
   res.sendFile(path.join(__dirname, 'public', 'homepage.html'));
 });
+
 app.get('/login', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
+
 app.get('/signup', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'signup.html'));
 });
+
 app.get('/reset', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'reset.html'));
 });
+
+app.get('/resetpass', (req, res) => {
+  if (!req.session.email) {
+    return res.redirect('/login');
+  }
+  res.sendFile(path.join(__dirname, 'public', 'newpass.html'));
+});
+
 app.get('/profile', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'profile.html'));
 });
+
 app.get('/tos', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'tos.html'));
 });
